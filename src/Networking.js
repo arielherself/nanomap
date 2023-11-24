@@ -13,4 +13,4 @@ export function post(method,args) {
         return response_data;
     };
     return ft();
-};
+}

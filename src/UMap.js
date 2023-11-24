@@ -1,4 +1,5 @@
 import React, {Component, useEffect, useRef, useState} from 'react';
+import * as L from 'leaflet';
 import SearchIcon from '@mui/icons-material/Search';
 import {MapContainer, TileLayer, Marker, Popup, useMap} from 'react-leaflet';
 import {useMapEvents} from 'react-leaflet/hooks';
@@ -7,7 +8,6 @@ import {Autocomplete, CircularProgress, Sheet} from "@mui/joy";
 import SimulateClick from "./SimulateClick";
 
 const AppleParkLoc=[37.334835049999995,-122.01139165956805];
-
 class Markers extends Component {
     constructor(props) {
         super(props);
@@ -16,12 +16,10 @@ class Markers extends Component {
 
     render() {
         const mks=this.state.markers.map((p, i) => (
-            <Marker position={[p[0], p[1]]} opacity={1.0}><Popup>Generated
-                by <code>Markers()</code></Popup></Marker>
+            <Marker interactive={false} position={[p[0], p[1]]} opacity={1.0} />
         ));
         const cmks=this.state.candMarkers.map((p, i) => (
-            <Marker interactive={false} position={[p[0], p[1]]} opacity={0.5}><Popup>Generated
-                by <code>Markers()</code></Popup></Marker>
+            <Marker interactive={false} position={[p[0], p[1]]} opacity={0.5} />
         ));
         return mks.concat(cmks);
     }
@@ -71,7 +69,10 @@ function MapClickHandler({mks}) {
             const lat = e.latlng.lat, lng = e.latlng.lng;
             console.info(`Clicking on ${lat} ${lng}`);
             mks.current.addMarker(lat, lng);
-            post('click', [lat, lng]);
+            post('click', [lat, lng]).catch((e)=>{
+                console.error(e);
+                location.reload();
+            });
         },
         // TODO
         locationfound: (location) => {
