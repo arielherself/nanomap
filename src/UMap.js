@@ -1,7 +1,7 @@
 import React, {Component, useEffect, useRef, useState} from 'react';
 import * as L from 'leaflet';
 import SearchIcon from '@mui/icons-material/Search';
-import {MapContainer, TileLayer, Marker, Popup, useMap} from 'react-leaflet';
+import {MapContainer, TileLayer, Marker, Popup, useMap, LayersControl} from 'react-leaflet';
 import {useMapEvents} from 'react-leaflet/hooks';
 import {post} from './Networking';
 import {Autocomplete, CircularProgress, Sheet} from "@mui/joy";
@@ -11,7 +11,7 @@ const AppleParkLoc=[37.334835049999995,-122.01139165956805];
 class Markers extends Component {
     constructor(props) {
         super(props);
-        this.state = {markers: [], candMarkers: []};
+        this.state = {markers: [], candMarkers: [], candEmpty: true};
     }
 
     render() {
@@ -26,7 +26,7 @@ class Markers extends Component {
 
     addMarker(lat, lng) {
         this.setState((prev) => ({
-            markers: [...prev.markers, [lat, lng]], candMarkers: prev.candMarkers,
+            markers: [...prev.markers, [lat, lng]], candMarkers: prev.candMarkers,candEmpty: prev.candEmpty
         }));
         this.getFocus();
     }
@@ -35,17 +35,18 @@ class Markers extends Component {
         this.setState((prev) => ({
             candMarkers: [...prev.candMarkers, [lat, lng]],
             markers: prev.markers,
+            candEmpty: false
         }));
         this.getFocus();
     }
 
     clearMarkers() {
-        this.setState((prev) => ({markers: [], candMarkers: prev.candMarkers}));
+        this.setState((prev) => ({markers: [], candMarkers: prev.candMarkers, candEmpty: prev.candMarkers}));
         this.getFocus();
     }
 
     clearCandMarkers(){
-        this.setState((prev) => ({markers: prev.markers, candMarkers: []}));
+        this.setState((prev) => ({markers: prev.markers, candMarkers: [], candEmpty: true}));
         this.getFocus();
     }
 
@@ -148,7 +149,7 @@ function ChangeView({center,zoom}){
 export default function UMap() {
     const markersRef = useRef(null);
     const [focus, setFocus]=useState([37.334835049999995,-122.01139165956805]);
-    const zoom=13;
+    const zoom=16;
     const sf=(a)=>{setFocus(a);console.log(`triggered focus update, new focus is ${focus}`);};
     return (
         <Sheet>
@@ -162,8 +163,8 @@ export default function UMap() {
                 <Markers ref={markersRef} focusUpdater={sf}/>
                 <MapClickHandler mks={markersRef}/>
             </MapContainer>
-            <Sheet sx={{position: 'absolute', top: '20px', left: '10vw', zIndex: 'modal'}}>
-                <SimulateClick />
+            <Sheet sx={{position: 'absolute', top: '20px', right: '10vw', zIndex: 'modal'}}>
+                <SimulateClick isCandEmpty={markersRef.current?markersRef.current.state.candEmpty:true} />
                 <LocationSearch mks={markersRef}/>
             </Sheet>
         </Sheet>
