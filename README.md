@@ -1,7 +1,7 @@
-<center>
+<p align="center">
 <img src="public/icon.jpeg" style="height: 100px; border-radius: 50%"/>
-<h1>nanoMap</h1>
-</center>
+</p>
+<h1 align="center">nanoMap</h1>
 
 This project is a minimalized port for scheduling route on [OpenStreetMap](https://openstreetmap.org). This front-end application is built with [Create React App](https://create-react-app.dev/) and the basic functionality uses [React Leaflet](https://react-leaflet.js.org). For more information about the backend, please refer to [arielherself/nanomap-backend](https://github.com/arielherself/nanomap-backend).
 
