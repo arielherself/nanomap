@@ -15,7 +15,7 @@ An instance is deployed at https://nanomap.vercel.app<nothing>. You can also cli
 
 ## On your server
 
-_Please install the latest version of [Node.js](https://nodejs.org) and [npmJS](https://www.npmjs.com) first._
+_Please install the latest version of [Node.js](https://nodejs.org), [npmJS](https://www.npmjs.com) and [Vercel CLI](https://vercel.com/docs/cli) first._
 
 Just four line of script:
 
@@ -23,5 +23,5 @@ Just four line of script:
 git clone "https://github.com/arielherself/nanomap" nanomap &&
 cd nanomap &&
 npm install &&
-npm start
+vercel dev
 ```
