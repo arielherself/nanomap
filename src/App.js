@@ -30,7 +30,7 @@ export default function App() {
             console.error(e);
             setVersion('');
         });
-    }, 1000);
+    }, 2000);
     return (
         <div className="App" style={{pointerEvents: version !== '' ? 'all' : 'none'}}>
             <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
