@@ -5,13 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3c7078e7-6f30-4d92-9696-11496f9e6dff" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/api/click.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/handshake.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/click.js" beforeDir="false" afterPath="$PROJECT_DIR$/api/click.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/handshake.js" beforeDir="false" afterPath="$PROJECT_DIR$/api/handshake.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Networking.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Networking.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/UMap.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/UMap.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -84,7 +80,7 @@
       <workItem from="1700814201341" duration="315000" />
       <workItem from="1700814808669" duration="47000" />
       <workItem from="1700822693197" duration="9493000" />
-      <workItem from="1701004587189" duration="3052000" />
+      <workItem from="1701004587189" duration="3578000" />
     </task>
     <servers />
   </component>

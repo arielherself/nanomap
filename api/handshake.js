@@ -6,6 +6,7 @@ const __DEBUG__=1,
 
 export default function handler(req,res){
     res.status(200).json({
+        log: 'Method: handshake\nStatus: responded handshake request',
         version: __APP_VERSION__,
         intro:   __APP_INTRO__,
     });

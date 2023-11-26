@@ -71,10 +71,10 @@ function MapClickHandler({mks}) {
             console.info(`Clicking on ${lat} ${lng}`);
             mks.current.addMarker(lat, lng);
             post('click', [lat, lng]).then((response)=>{
-                console.log(`Response:\n${response['log']}`)
+                // TODO
             }).catch((e)=>{
                 console.error(e);
-                // location.reload();
+                location.reload();
             });
         },
         // TODO

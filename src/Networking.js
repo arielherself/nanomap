@@ -7,7 +7,7 @@ export function post(method,args) {
             // body: data
         });
         const response_data = await response.json();
-        console.log(`Received: ${JSON.stringify(response_data)}`);
+        console.log(`Request "${method}" finished:\n  ${response_data.log.replaceAll('\n','\n  ')}`);
         return response_data;
     };
     return ft();
