@@ -22,7 +22,7 @@ export default function App() {
     const [intro, setIntro] = useState('');
     const hs = setInterval(() => {
         post('handshake', []).then((response) => {
-            const [version, intro] = response.split('@@');
+            const {version, intro} = response;
             setVersion(version);
             setIntro(intro);
             clearInterval(hs);

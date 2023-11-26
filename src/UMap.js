@@ -70,9 +70,11 @@ function MapClickHandler({mks}) {
             const lat = e.latlng.lat, lng = e.latlng.lng;
             console.info(`Clicking on ${lat} ${lng}`);
             mks.current.addMarker(lat, lng);
-            post('click', [lat, lng]).catch((e)=>{
+            post('click', [lat, lng]).then((response)=>{
+                console.log(`Response:\n${response['log']}`)
+            }).catch((e)=>{
                 console.error(e);
-                location.reload();
+                // location.reload();
             });
         },
         // TODO
@@ -148,7 +150,7 @@ function ChangeView({center,zoom}){
 
 export default function UMap() {
     const markersRef = useRef(null);
-    const [focus, setFocus]=useState([37.334835049999995,-122.01139165956805]);
+    const [focus, setFocus]=useState(AppleParkLoc);
     const zoom=16;
     const sf=(a)=>{setFocus(a);console.log(`triggered focus update, new focus is ${focus}`);};
     return (
