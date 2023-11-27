@@ -4,7 +4,7 @@ import './App.css';
 import UMap from "./UMap";
 import {
     Alert,
-    Box,
+    Box, Button,
     CircularProgress,
     DialogContent,
     DialogTitle,
@@ -70,10 +70,10 @@ export default function App() {
                                     display: 'flex',
                                     width: version !== '' ? '60%' : 'auto',
                                     height: version !== '' ? '60%' : 'auto',
+                                    maxWidth: '50vw',
                                 }}
                             >
-                                <ModalClose/>
-                                <Sheet sx={{margin: 'auto'}}>
+                                <Sheet sx={{display: 'flex',marginTop: version!==''?'10%':0, flexDirection: 'column'}}>
                                     <Alert style={{display: version !== '' ? 'none' : 'flex'}}
                                            variant="soft"
                                            color="warning"
@@ -112,6 +112,9 @@ export default function App() {
                                                    sx={{margin: 'auto'}}>
                                         <div dangerouslySetInnerHTML={{__html: intro}}/>
                                     </DialogContent>
+                                </Sheet>
+                                <Sheet onClick={()=>setFeatureOpen(false)} sx={{display: version!==''?'flex':'none', position: 'absolute', bottom: '10%', left: '50%', transform: 'translateX(-50%)', width: '100%'}}>
+                                    <Button size="lg" sx={{width: '50%', maxWidth: '20vw', display: 'flex', margin: 'auto'}}>Done</Button>
                                 </Sheet>
                             </ModalDialog>
                         </Modal>
