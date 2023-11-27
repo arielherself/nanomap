@@ -1,5 +1,4 @@
 export function post(type,method,args) {
-    let res = '';
     let ft = async () => {
         let response;
         if(type==='GET'){
