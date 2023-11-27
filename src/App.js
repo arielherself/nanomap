@@ -69,11 +69,11 @@ export default function App() {
                                     }[state],
                                     display: 'flex',
                                     width: version !== '' ? '60%' : 'auto',
-                                    height: version !== '' ? '60%' : 'auto',
+                                    height: 'auto',
                                     maxWidth: '50vw',
                                 }}
                             >
-                                <Sheet sx={{display: 'flex',marginTop: version!==''?'10%':0, flexDirection: 'column'}}>
+                                <Sheet sx={{display: 'flex',marginTop: version!==''?'5%':0, flexDirection: 'column'}}>
                                     <Alert style={{display: version !== '' ? 'none' : 'flex'}}
                                            variant="soft"
                                            color="warning"
@@ -109,11 +109,11 @@ export default function App() {
                                         in
                                         nanoMap {version}</DialogTitle>
                                     <DialogContent style={{display: version !== '' ? 'flex' : 'none'}}
-                                                   sx={{margin: 'auto'}}>
+                                                   sx={{margin: 'auto', maxWidth: '80%'}}>
                                         <div dangerouslySetInnerHTML={{__html: intro}}/>
                                     </DialogContent>
                                 </Sheet>
-                                <Sheet onClick={()=>setFeatureOpen(false)} sx={{display: version!==''?'flex':'none', position: 'absolute', bottom: '10%', left: '50%', transform: 'translateX(-50%)', width: '100%'}}>
+                                <Sheet onClick={()=>setFeatureOpen(false)} sx={{display: version!==''?'flex':'none', bottom: '10%', width: '100%'}}>
                                     <Button size="lg" sx={{width: '50%', maxWidth: '20vw', display: 'flex', margin: 'auto'}}>Done</Button>
                                 </Sheet>
                             </ModalDialog>
