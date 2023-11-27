@@ -115,7 +115,7 @@ function MapClickHandler({mks,focusUpdater,locator,locker}) {
                 locker(true);
             }).catch((e) => {
                 console.error(e);
-                // location.reload();
+                location.reload();
             });
         },
         // TODO
