@@ -1,8 +1,6 @@
 const __DEBUG__=1,
-      __APP_VERSION__='v1.0a1',
-      __APP_INTRO__='<list>\n' +
-          '  <li>We can actively detect the connection status now!</li>\n' +
-          '</list>';
+      __APP_VERSION__='v0.1.1a',
+      __APP_INTRO__='We can display a real-looking polyline when you select locations on the map!';
 
 export default function handler(req,res){
     res.status(200).json({
