@@ -21,7 +21,7 @@ export default function App() {
     const [version, setVersion] = useState('');
     const [intro, setIntro] = useState('');
     const hs = setInterval(() => {
-        post('handshake', []).then((response) => {
+        post('GET','handshake', []).then((response) => {
             const {version, intro} = response;
             setVersion(version);
             setIntro(intro);

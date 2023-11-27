@@ -1,7 +1,6 @@
 import React, {Component, useEffect, useRef, useState} from 'react';
-import * as L from 'leaflet';
 import SearchIcon from '@mui/icons-material/Search';
-import {MapContainer, TileLayer, Marker, Popup, useMap, LayersControl} from 'react-leaflet';
+import {MapContainer, TileLayer, Marker, useMap, Polyline} from 'react-leaflet';
 import {useMapEvents} from 'react-leaflet/hooks';
 import {post} from './Networking';
 import {Autocomplete, CircularProgress, Sheet} from "@mui/joy";
@@ -11,22 +10,30 @@ const AppleParkLoc=[37.334835049999995,-122.01139165956805];
 class Markers extends Component {
     constructor(props) {
         super(props);
-        this.state = {markers: [], candMarkers: [], candEmpty: true};
+        this.state = {markers: [], candMarkers: [], candEmpty: true, polylines: []};
     }
 
     render() {
+        const fillBlueOptions = { fillColor: 'blue' };
+        const pl=this.state.polylines;
         const mks=this.state.markers.map((p, i) => (
-            <Marker interactive={false} position={[p[0], p[1]]} opacity={1.0} />
+            <Marker key={`m`+i} interactive={false} position={[p[0], p[1]]} opacity={1.0} />
         ));
         const cmks=this.state.candMarkers.map((p, i) => (
-            <Marker interactive={false} position={[p[0], p[1]]} opacity={0.5} />
+            <Marker key={`c`+i} interactive={false} position={[p[0], p[1]]} opacity={0.5} />
         ));
-        return mks.concat(cmks);
+        return [
+            ...mks.concat(cmks),
+            pl&&pl.length>1?<Polyline pathOptions={fillBlueOptions} positions={pl} />:<div/>
+        ];
     }
 
     addMarker(lat, lng) {
         this.setState((prev) => ({
-            markers: [...prev.markers, [lat, lng]], candMarkers: prev.candMarkers,candEmpty: prev.candEmpty
+            markers: [...prev.markers, [lat, lng]],
+            candMarkers: prev.candMarkers,
+            candEmpty: prev.candEmpty,
+            polylines: [],  // automatically clear polylines when marker changes
         }));
         this.getFocus();
     }
@@ -35,18 +42,29 @@ class Markers extends Component {
         this.setState((prev) => ({
             candMarkers: [...prev.candMarkers, [lat, lng]],
             markers: prev.markers,
-            candEmpty: false
+            candEmpty: false,
+            polylines: prev.polylines,
         }));
         this.getFocus();
     }
 
     clearMarkers() {
-        this.setState((prev) => ({markers: [], candMarkers: prev.candMarkers, candEmpty: prev.candMarkers}));
+        this.setState((prev) => ({
+            markers: [],
+            candMarkers: prev.candMarkers,
+            candEmpty: prev.candEmpty,
+            polylines: [],
+        }));
         this.getFocus();
     }
 
     clearCandMarkers(){
-        this.setState((prev) => ({markers: prev.markers, candMarkers: [], candEmpty: true}));
+        this.setState((prev) => ({
+            markers: prev.markers,
+            candMarkers: [],
+            candEmpty: true,
+            polylines: prev.polylines,
+        }));
         this.getFocus();
     }
 
@@ -61,6 +79,16 @@ class Markers extends Component {
         }
         this.props.focusUpdater(currentFocus);
     }
+
+    flushPolylines(pl){
+        this.setState((prev)=>({
+            markers: prev.markers,
+            candMarkers: prev.candMarkers,
+            candEmpty: prev.candEmpty,
+            polylines: pl,
+        }));
+        // TODO
+    }
 }
 
 function MapClickHandler({mks}) {
@@ -70,11 +98,13 @@ function MapClickHandler({mks}) {
             const lat = e.latlng.lat, lng = e.latlng.lng;
             console.info(`Clicking on ${lat} ${lng}`);
             mks.current.addMarker(lat, lng);
-            post('click', [lat, lng]).then((response)=>{
-                // TODO
+            post('POST','click', mks.current.state.markers).then((response)=>{
+                // TODO: real functionality
+                const pl=JSON.parse(response.multipolyline);
+                mks.current.flushPolylines(pl);
             }).catch((e)=>{
                 console.error(e);
-                location.reload();
+                // location.reload();
             });
         },
         // TODO

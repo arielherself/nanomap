@@ -1,11 +1,18 @@
-export function post(method,args) {
-    const payload=args.join('@@');
+export function post(type,method,args) {
     let res = '';
     let ft = async () => {
-        const response = await fetch(`/api/${method}${payload.length?"?query=":""}${payload}`, {
-            method: 'GET',
-            // body: data
-        });
+        let response;
+        if(type==='GET'){
+            const payload=args.join('@@');
+            response = await fetch(`/api/${method}${payload.length?"?query=":""}${payload}`, {
+                method: 'GET',
+            });
+        }else if(type==='POST'){
+            response = await fetch(`/api/${method}`, {
+                method: 'POST',
+                body: JSON.stringify(args),
+            });
+        }
         const response_data = await response.json();
         console.log(`Request "${method}" finished:\n  ${response_data.log.replaceAll('\n','\n  ')}`);
         return response_data;
