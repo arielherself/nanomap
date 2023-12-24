@@ -109,13 +109,18 @@ function MapClickHandler({mks,focusUpdater,locator,locker}) {
             post('POST', 'click', mks.current.state.markers).then((response) => {
                 // TODO: real functionality
                 const pl = JSON.parse(response.multipolyline);
-                mks.current.flushPolylines(pl);
+                // DEBUG
+                // response.__debug_pts.forEach(({lat,lon})=>{
+                //     mks.current.addCandMarker(lat,lon);
+                // });
+                console.log(`pl = ${JSON.stringify(pl)}`);
+                if (pl.length > 1) mks.current.flushPolylines(pl);
                 focusUpdater([lat,lng]);
                 locator([lat,lng]);
                 locker(true);
             }).catch((e) => {
                 console.error(e);
-                location.reload();
+                // location.reload();
             });
         },
         // TODO

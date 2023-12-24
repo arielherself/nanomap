@@ -1,11 +1,8 @@
 const __DEBUG__=1,
-      __APP_VERSION__='v0.1.2a',
+      __APP_VERSION__='v0.1.3a',
       __APP_INTRO__=`
-<b>Relocating Support</b>
-Can't find where you are from? We now memorize the last location you visited. Tap the "Relocate" button to find your way home.<br>
-<b>Nearby Search</b>
-You can first locate a general area and schedule detailed travel plan later. Tap the magnifier/gear icon to toggle between Nearby Search mode and Global Search mode.
-<i>This update also includes several stability and UI improvements.</i>
+<b>Right way to follow.</b><br>
+In this update you can find a shortest route for any given start and destination.<br>
 `;
 
 export default function handler(req,res){
