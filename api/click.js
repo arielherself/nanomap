@@ -3,7 +3,7 @@ import {sill, sill_unwrap, noexcept} from "../tools/Debug";
 import {get_row} from "../tools/Misc";
 import benchmark from "../tools/PathBench";
 
-const __spa = benchmark;
+const __spa = obvious_dijkstra;
 
 function find_nearest_node_id(nodes, point) {
     const [lat, lon] = point;
@@ -45,22 +45,22 @@ const shortest_path = noexcept((nodes, ways, start_point, end_point) => {
             }
         }
     }
-    sill_unwrap(aff);
+    // sill_unwrap(aff);
     const actual_start_node_id = find_nearest_node_id(clean_nodes, start_point);
     const actual_end_node_id = find_nearest_node_id(clean_nodes, end_point);
-    sill_unwrap(typeof (actual_start_node_id));
+    // sill_unwrap(typeof (actual_start_node_id));
     // sill(count);
     const ch_dict = {};
     let f = 1;
     for (const t in ways) {
-        if (t === ways[aff[actual_start_node_id]]) sill('yes');
+        // if (t === ways[aff[actual_start_node_id]]) sill('yes');
         const [l, n] = get_row(ways, t);
         let prev = '';
         for (let i = 0; i < n; ++i) {
             const curr = l[i].toString();
             // if(true) {
             if (count[curr] > 1 || curr === actual_end_node_id || curr === actual_start_node_id) {
-                if (curr === actual_start_node_id) sill(curr === actual_start_node_id);
+                // if (curr === actual_start_node_id) sill(curr === actual_start_node_id);
                 if (prev !== '') {
                     if (ch_dict[curr]) {
                         ch_dict[curr].push(prev);
@@ -84,7 +84,7 @@ const shortest_path = noexcept((nodes, ways, start_point, end_point) => {
     sill(`start distance: ${haversine_distance(nodes[actual_start_node_id], start_point)}`);
     sill(`dest distance: ${haversine_distance(nodes[actual_end_node_id], end_point)}`);
     sill("calling __spa...");
-    const seq = __spa(nodes, clean_nodes, ways, ch_dict, count, aff, actual_start_node_id, actual_end_node_id);
+    const seq = __spa(clean_nodes, ways, ch_dict, count, aff, actual_start_node_id, actual_end_node_id);
     const res = [end_point];
     seq.forEach((node_id) => {
         if (clean_nodes[node_id]) res.push(clean_nodes[node_id]);
