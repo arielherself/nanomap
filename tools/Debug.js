@@ -1,7 +1,7 @@
 // no dependencies
 import {__DEBUG__} from "../PublicProperty";
 
-export function noexcept(f) {
+export function noexcept(_f) {
     /**
      * No exceptions.
      * @returns {*}
@@ -9,7 +9,7 @@ export function noexcept(f) {
      */
     function _wrap() {
         try {
-            return f.apply(this, arguments);
+            return _f.apply(this, arguments);
         } catch (e) {
             console.debug(e);
         }
@@ -17,17 +17,12 @@ export function noexcept(f) {
     return _wrap;
 }
 
-export const sill = noexcept((x) => {
+export const sill = noexcept((_x) => {
     if(__DEBUG__) {
-        console.log(x);
+        console.log(_x);
     }
 });
 
-export const sill_unwrap = noexcept((x) => {
-    sill(JSON.stringify(x));
-});
-
-export const get_row = noexcept((a,i) => {
-    const row = a[i];
-    return [row, row.length];
+export const sill_unwrap = noexcept((_x) => {
+    sill(JSON.stringify(_x));
 });
