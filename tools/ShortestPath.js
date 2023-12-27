@@ -24,23 +24,15 @@ function __haversine_distance(p1, p2) {
  * Use Dijkstra algorithm to find the shortest path.
  * @param nodes node index list
  * @param ways  unused in this implementation
+ * @param loc   unused in this implementation
  * @param ch    adjacent table
  * @param count unused in this implementation
  * @param aff   unused in this implementation
  * @param u     start node id
  * @param p     destination node id
  */
-function __dijkstra(nodes, ways, ch, count, aff, u, p) {
+function __dijkstra(nodes, ways, loc, ch, count, aff, u, p) {
     // sill(`node count: ${Object.keys(nodes).length}`);
-    const weight_cache = {};
-    const get_weight = (n1, n2) => {
-        const tup = [n1, n2];
-        if (weight_cache[tup]) {
-            return weight_cache[tup];
-        }
-        weight_cache[tup] = __haversine_distance(nodes[n1], nodes[n2]);
-        return weight_cache[tup];
-    };
     const dis = {};
     const fa = {};
     const vis = new Set();
@@ -56,9 +48,9 @@ function __dijkstra(nodes, ways, ch, count, aff, u, p) {
         vis.add(v);
         const t = ch[v].length;
         for (let j = 0; j < t; ++j) {
-            const c = ch[v][j];
+            const [c, w] = ch[v][j];
             if (!nodes[c]) continue;
-            const w = get_weight(v, c);
+            // const w = get_weight(v, c);
             if (!dis[c] || d + w < dis[c]) {
                 dis[c] = d + w;
                 pq.push([dis[c], c]);
@@ -86,42 +78,15 @@ function __dijkstra(nodes, ways, ch, count, aff, u, p) {
  * Use Dijkstra algorithm with Obvious optimization to find the shortest path.
  * @param nodes node index list
  * @param ways  node list for each way
+ * @param loc   relative location in the way
  * @param ch    adjacent table
  * @param count determine isolated nodes
  * @param aff   affiliation of isolated nodes
  * @param u     start node id
  * @param p     destination node id
  */
-function __obvious_dijkstra(nodes, ways, ch, count, aff, u, p) {
+function __obvious_dijkstra(nodes, ways, loc, ch, count, aff, u, p) {
     // sill(`node count: ${Object.keys(nodes).length}`);
-    const weight_cache = {};
-    const get_weight_along = (way, n1, n2) => {
-        const tup = [n1, n2];
-        if (weight_cache[tup]) {
-            return weight_cache[tup];
-        }
-        let res = 0;
-        const n = way.length;
-        let prev = '';
-        let state = 0;
-        for (let i = 0; i < n; ++i) {
-            const curr = way[i].toString();
-            if (curr === n1 || curr === n2) {
-                if (state) {
-                    res += (__haversine_distance(nodes[prev], nodes[curr]));
-                    break;
-                } else {
-                    state = 1;
-                    prev = curr;
-                }
-            } else if (state) {
-                res += (__haversine_distance(nodes[prev], nodes[curr]));
-                prev = curr;
-            }
-        }
-        weight_cache[tup] = res;
-        return res;
-    };
     const dis = {};
     const fa = {};
     const vis = new Map();
@@ -140,37 +105,15 @@ function __obvious_dijkstra(nodes, ways, ch, count, aff, u, p) {
         }
         // sill('loop');
         vis.set(v,true);
-        dis[v] = d;
         const t = ch[v].length;
         for (let j = 0; j < t; ++j) {
-            const c = ch[v][j];
+            const [c, w] = ch[v][j];
             if (!nodes[c]) continue;
-            const way_id = find_common(aff[c], aff[v]);
-            if (!way_id) sill("FATAL: NO COMMON WAY");
-            const way = ways[way_id];
-            const w = get_weight_along(way, v, c);
             // sill(w);
-            if (w > 0 && (!dis[c] || d + w < dis[c])) {
+            if ((!dis[c] || d + w < dis[c])) {
                 dis[c] = d + w;
                 pq.push([dis[c], c]);
-                const v_oc = way.indexOf(parseInt(v));
-                const c_oc = way.indexOf(parseInt(c));
-                let prev = c;
-                if (v_oc < c_oc) {
-                    for (let _p = c_oc - 1; _p >= v_oc; --_p) {
-                        const node = way[_p].toString();
-                        fa[prev] = node;
-                        if (vis.has(node)) break;
-                        prev = node;
-                    }
-                } else {
-                    for (let _p = c_oc + 1; _p <= v_oc; ++_p) {
-                        const node = way[_p].toString();
-                        fa[prev] = node;
-                        if (vis.has(node)) break;
-                        prev = node;
-                    }
-                }
+                fa[c] = v;
             }
         }
     }
@@ -179,14 +122,32 @@ function __obvious_dijkstra(nodes, ways, ch, count, aff, u, p) {
     const res = [p];
     vis.clear();
     while (fa[curr]) {
-        curr = fa[curr].toString();
+        const prev = curr;
+        curr = fa[curr];
         if (vis.has(curr)) {
             sill(`Cycle at ${curr}`);
             // sill(res);
             break;
         }
         vis.set(curr,true);
-        res.push(curr);
+
+        // res.push(curr);
+        const way_id = find_common(aff[prev], aff[curr]);
+        const way = ways[way_id];
+        if(!way) {
+            continue;
+        }
+        const p_oc = loc[prev][way_id];
+        const c_oc = loc[curr][way_id];
+        if (p_oc < c_oc) {
+            for (let _p = p_oc + 1; _p <= c_oc; ++_p) {
+                res.push(way[_p]);
+            }
+        } else {
+            for (let _p = p_oc - 1; _p >= c_oc; --_p) {
+                res.push(way[_p]);
+            }
+        }
     }
     // sill("finished Obvious Dijkstra.");
     return res;
