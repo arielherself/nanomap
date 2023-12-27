@@ -1,0 +1,79 @@
+import {MinPriorityQueue} from "@datastructures-js/priority-queue";
+import {sill, noexcept} from "./Debug";
+
+function __haversine_distance(p1, p2) {
+    const toRadians = (degrees) => {
+        return degrees * Math.PI / 180;
+    };
+    const [lat1, lon1] = p1;
+    const [lat2, lon2] = p2;
+    const R = 6371;
+    const dLat = toRadians(lat2 - lat1);
+    const dLon = toRadians(lon2 - lon1);
+    const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+        Math.cos(toRadians(lat1)) * Math.cos(toRadians(lat2)) *
+        Math.sin(dLon / 2) * Math.sin(dLon / 2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    if (R * c < 0) console.warn("WARNING!!!");
+    return R * c;
+}
+
+
+/**
+ * Use Dijkstra algorithm to find the shortest path.
+ * @param nodes node index list
+ * @param ch    adjacent table
+ * @param u     start node id
+ * @param p     destination node id
+ */
+function __dijkstra(nodes, ch, u, p) {
+    sill(`node count: ${Object.keys(nodes).length}`);
+    const weight_cache = {};
+    const get_weight = (n1, n2) => {
+        const tup = [n1, n2];
+        if (weight_cache[tup]) {
+            return weight_cache[[n1, n2]];
+        }
+        weight_cache[tup] = __haversine_distance(nodes[n1], nodes[n2]);
+        return weight_cache[tup];
+    };
+    const dis = {};
+    const fa = {};
+    const vis = new Set();
+    const pq = new MinPriorityQueue();
+    dis[u] = 0;
+    pq.push([0, u]);
+    while (!pq.isEmpty()) {
+        const [d, v] = pq.pop();
+        if (vis.has(v) || !ch[v]) continue;
+        vis.add(v);
+        const t = ch[v].length;
+        for (let j = 0; j < t; ++j) {
+            const c = ch[v][j];
+            if (!nodes[c]) continue;
+            const w = get_weight(v, c);
+            if (!dis[c] || d + w < dis[c]) {
+                dis[c] = d + w;
+                pq.push([dis[c], c]);
+                fa[c] = v;
+            }
+        }
+    }
+    let curr = p;
+    const res = [p];
+    vis.clear();
+    while (fa[curr]) {
+        curr = fa[curr].toString();
+        if (vis.has(curr)) {
+            sill(`Cycle at ${curr}`);
+            break;
+        }
+        vis.add(curr);
+        res.push(curr);
+    }
+    sill("finished Dijkstra.");
+    return res;
+}
+
+export const haversine_distance = noexcept(__haversine_distance);
+export const dijkstra = noexcept(__dijkstra);

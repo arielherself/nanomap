@@ -1,3 +1,5 @@
+import {sill} from "./tools/Debug";
+
 export function post(type,method,args) {
     let ft = async () => {
         let response;
@@ -13,7 +15,7 @@ export function post(type,method,args) {
             });
         }
         const response_data = await response.json();
-        console.log(`Request "${method}" finished:\n  ${response_data.log.replaceAll('\n','\n  ')}`);
+        sill(`Request "${method}" finished:\n  ${response_data.log.replaceAll('\n','\n  ')}`);
         return response_data;
     };
     return ft();

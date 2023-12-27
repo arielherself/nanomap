@@ -6,6 +6,7 @@ import {post} from './Networking';
 import {Autocomplete, CircularProgress, Sheet} from "@mui/joy";
 import SimulateClick from "./SimulateClick";
 import {NearMe} from "@mui/icons-material";
+import {sill} from "./tools/Debug";
 
 const defaultZoomLevel=16;
 const defaultLocationName = 'Apple Park';
@@ -113,7 +114,7 @@ function MapClickHandler({mks,focusUpdater,locator,locker}) {
                 // response.__debug_pts.forEach(({lat,lon})=>{
                 //     mks.current.addCandMarker(lat,lon);
                 // });
-                console.log(`pl = ${JSON.stringify(pl)}`);
+                sill(`pl = ${JSON.stringify(pl)}`);
                 if (pl.length > 1) mks.current.flushPolylines(pl);
                 focusUpdater([lat,lng]);
                 locator([lat,lng]);
@@ -215,7 +216,7 @@ export default function UMap() {
     const [zoom,setZoom] = useState(defaultZoomLevel);
     const sf = (a) => {
         setFocus(a);
-        console.log(`triggered focus update, new focus is ${focus}`);
+        sill(`triggered focus update, new focus is ${focus}`);
         const ft = fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${a[0]}&lon=${a[1]}&zoom=${zoom}&addressdetails=0`).then(response => response.json());
         ft.then((response) => setNearbyName(' ' + response.name)).catch(() => setNearbyName('by'));
     };
