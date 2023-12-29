@@ -1,9 +1,9 @@
-import {dijkstra, haversine_distance, obvious_dijkstra} from "../tools/ShortestPath";
+import {dijkstra, haversine_distance, obvious_dijkstra, obvious_a_star} from "../tools/ShortestPath";
 import {sill, sill_unwrap, noexcept} from "../tools/Debug";
 import {get_row} from "../tools/Misc";
 import benchmark from "../tools/PathBench";
 
-const __spa = obvious_dijkstra;
+const __spa = obvious_a_star;
 
 function find_nearest_node_id(nodes, point) {
     const [lat, lon] = point;

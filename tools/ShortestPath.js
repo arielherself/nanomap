@@ -64,7 +64,7 @@ function __dijkstra(nodes, ways, loc, ch, count, aff, u, p) {
     while (fa[curr]) {
         curr = fa[curr].toString();
         if (vis.has(curr)) {
-            sill(`Cycle at ${curr}`);
+            // sill(`Cycle at ${curr}`);
             break;
         }
         vis.add(curr);
@@ -125,7 +125,98 @@ function __obvious_dijkstra(nodes, ways, loc, ch, count, aff, u, p) {
         const prev = curr;
         curr = fa[curr];
         if (vis.has(curr)) {
-            sill(`Cycle at ${curr}`);
+            // sill(`Cycle at ${curr}`);
+            // sill(res);
+            break;
+        }
+        vis.set(curr,true);
+
+        // res.push(curr);
+        const way_id = find_common(aff[prev], aff[curr]);
+        const way = ways[way_id];
+        if(!way) {
+            continue;
+        }
+        const p_oc = loc[prev][way_id];
+        const c_oc = loc[curr][way_id];
+        if (p_oc < c_oc) {
+            for (let _p = p_oc + 1; _p <= c_oc; ++_p) {
+                res.push(way[_p]);
+            }
+        } else {
+            for (let _p = p_oc - 1; _p >= c_oc; --_p) {
+                res.push(way[_p]);
+            }
+        }
+    }
+    // sill("finished Obvious Dijkstra.");
+    return res;
+}
+
+/**
+ * Use A-star algorithm with Obvious optimization to find the shortest path.
+ * @param nodes     node index list
+ * @param ways      node list for each way
+ * @param loc       relative location in the way
+ * @param ch        adjacent table
+ * @param count     determine isolated nodes
+ * @param aff       affiliation of isolated nodes
+ * @param u         start node id
+ * @param p         destination node id
+ * @param adaptive  if the coefficient is hard-coded
+ */
+function __obvious_a_star(nodes, ways, loc, ch, count, aff, u, p, adaptive = false) {
+    // sill(`node count: ${Object.keys(nodes).length}`);
+    const default_coefficient = 1.1;
+    const linear = (y) => y;
+    const curve = (y) => 0.8 * y * y;
+    const inversed_sigmoid = (y) => Math.log(y/(1.0-y));
+    const heuristic = (current_distance, node_id) => {
+        const estimate = haversine_distance(nodes[node_id], nodes[p]);
+        const coef = (!adaptive) ? default_coefficient : (
+            default_coefficient * curve(current_distance / (current_distance + estimate))
+        );
+        return coef * estimate;
+    };
+    const dis = {};
+    const fa = {};
+    const vis = new Map();
+    const pq = new MinPriorityQueue();
+    dis[u] = 0;
+    pq.push([0, 0, u]);
+    while (!pq.isEmpty()) {
+        const [_, d, v] = pq.pop();
+        if (vis.has(v) || !ch[v]) {
+            // sill(!ch[v]);
+            continue;
+        }
+        if (v === p) {
+            // sill('break');
+            break;
+        }
+        // sill('loop');
+        vis.set(v,true);
+        const t = ch[v].length;
+        for (let j = 0; j < t; ++j) {
+            const [c, w] = ch[v][j];
+            if (!nodes[c]) continue;
+            // sill(w);
+            if ((!dis[c] || d + w < dis[c])) {
+                dis[c] = d + w;
+                pq.push([dis[c] + heuristic(dis[c], c), dis[c], c]);
+                fa[c] = v;
+            }
+        }
+    }
+    // sill_unwrap(fa);
+    let curr = p;
+    const res = [p];
+    vis.clear();
+    while (fa[curr]) {
+        const prev = curr;
+        curr = fa[curr];
+        if (vis.has(curr)) {
+            // sill(`Cycle at ${curr}`);
             // sill(res);
             break;
         }
@@ -156,3 +247,4 @@ function __obvious_dijkstra(nodes, ways, loc, ch, count, aff, u, p) {
 export const haversine_distance = noexcept(__haversine_distance);
 export const dijkstra = noexcept(__dijkstra);
 export const obvious_dijkstra = noexcept(__obvious_dijkstra);
+export const obvious_a_star = noexcept(__obvious_a_star);

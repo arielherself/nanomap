@@ -39,7 +39,7 @@ class Markers extends Component {
             markers: [...prev.markers, [lat, lng]],
             candMarkers: prev.candMarkers,
             candEmpty: prev.candEmpty,
-            polylines: [],  // automatically clear polylines when marker changes
+            polylines: prev.polylines,
         }));
         this.getFocus();
     }
@@ -89,12 +89,12 @@ class Markers extends Component {
         }
     }
 
-    flushPolylines(pl) {
+    flushPolylines(pl, clear=true) {
         this.setState((prev) => ({
             markers: prev.markers,
             candMarkers: prev.candMarkers,
             candEmpty: prev.candEmpty,
-            polylines: pl,
+            polylines: clear ? pl : [...pl, ...prev.polylines], // mind the ordering
         }));
         // TODO
     }
@@ -107,7 +107,7 @@ function MapClickHandler({mks,focusUpdater,locator,locker}) {
             const {lat,lng}=e.latlng;
             console.info(`Clicking on ${lat} ${lng}`);
             mks.current.addMarker(lat, lng);
-            post('POST', 'click', mks.current.state.markers).then((response) => {
+            post('POST', 'click', mks.current.state.markers.slice(-2)).then((response) => {
                 // TODO: real functionality
                 const pl = JSON.parse(response.multipolyline);
                 // DEBUG
@@ -115,7 +115,7 @@ function MapClickHandler({mks,focusUpdater,locator,locker}) {
                 //     mks.current.addCandMarker(lat,lon);
                 // });
                 sill(`pl = ${JSON.stringify(pl)}`);
-                if (pl.length > 1) mks.current.flushPolylines(pl);
+                if (pl.length > 1) mks.current.flushPolylines(pl, false);
                 focusUpdater([lat,lng]);
                 locator([lat,lng]);
                 locker(true);
