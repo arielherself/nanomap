@@ -1,7 +1,7 @@
 // no dependencies
 
 export const __DEBUG__ = 1;
-export const __APP_VERSION__ = 'v0.3.2-beta';
+export const __APP_VERSION__ = 'v0.3.3-beta';
 
 export const __APP_INTRO__ = `
 <b>Algorithm improvement.</b><br>
