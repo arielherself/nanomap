@@ -68,6 +68,7 @@ const shortest_path = noexcept((nodes, ways, start_point, end_point) => {
     const ch_dict = {};
     const ch_dict_bench = {};
     let f = 1;
+    // let time = 0;
     for (const t in ways) {
         // if (t === ways[aff[actual_start_node_id]]) sill('yes');
         const [l, n] = get_row(ways, t);
@@ -87,6 +88,7 @@ const shortest_path = noexcept((nodes, ways, start_point, end_point) => {
         //         ch_dict_bench[prev] = [[curr, distance]];
         //     }
         // }
+        // const start_time = performance.now();
         let prev = '';
         let distance = 0;
         for (let i = 0; i < n; ++i) {
@@ -111,7 +113,10 @@ const shortest_path = noexcept((nodes, ways, start_point, end_point) => {
                 distance = 0;
             }
         }
+        // const end_time = performance.now();
+        // time += end_time - start_time;
     }
+    // sill(`Preprocessing time: ${time}`);
     // const clean_nodes = {};
     // Object.keys(nodes).forEach((node_id) => {
     //     if (ch_dict[node_id]) clean_nodes[node_id] = nodes[node_id];

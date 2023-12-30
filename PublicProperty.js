@@ -1,6 +1,6 @@
 // no dependencies
 
-export const __DEBUG__ = 0;
+export const __DEBUG__ = 1;
 export const __APP_VERSION__ = 'v0.3.2-beta';
 
 export const __APP_INTRO__ = `

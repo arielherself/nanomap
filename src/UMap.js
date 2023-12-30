@@ -39,7 +39,7 @@ class Markers extends Component {
     addMarker(lat, lng) {
         this.setState((prev) => ({
             markers: [...prev.markers, [lat, lng]],
-            candMarkers: prev.candMarkers,
+            candMarkers: [],
             mksEmpty: false,
             candEmpty: prev.candEmpty,
             polylines: prev.polylines,
@@ -115,12 +115,7 @@ function MapClickHandler({mks,focusUpdater,locator,locker}) {
             sill(`Clicking on ${lat} ${lng}`);
             mks.current.addMarker(lat, lng);
             post('POST', 'click', mks.current.state.markers.slice(-2)).then((response) => {
-                // TODO: real functionality
                 const pl = JSON.parse(response.multipolyline);
-                // DEBUG
-                // response.__debug_pts.forEach(({lat,lon})=>{
-                //     mks.current.addCandMarker(lat,lon);
-                // });
                 sill(`pl = ${JSON.stringify(pl)}`);
                 if (pl.length > 1) mks.current.flushPolylines(pl, false);
                 focusUpdater([lat,lng]);
@@ -165,7 +160,6 @@ const LocationSearch = ({mks, focus, nb}) => {
         setLoading(true);
         setQuery(v);
         try {
-            // setSuggestedLocations([]);
             if (v.trim() === '') {
                 setLoading(false);
                 return;
@@ -177,7 +171,6 @@ const LocationSearch = ({mks, focus, nb}) => {
             if (response.ok) {
                 response.json().then((data) => {
                     if (data.length > 0) {
-                        // const {lat, lon} = data[0];
                         mks.current.clearCandMarkers();
                         const res = [];
                         data.forEach((v, i, a) => {
@@ -231,6 +224,10 @@ export default function UMap() {
         sf(locatedFocus);
         setLocated(true);
     };
+    const clr = () => {
+        markersRef.current.clearMarkers();
+        markersRef.current.clearCandMarkers();
+    };
     const ViewportChange = () => {
         const map = useMapEvents({
             dragend: (e) => {
@@ -259,7 +256,7 @@ export default function UMap() {
                 <ViewportChange/>
             </MapContainer>
             <Sheet sx={{position: 'absolute', top: '20px', right: '10vw', zIndex: 'modal'}}>
-                <SimulateClick isLocated={located} relocator={relo} isMarkersEmpty={markersRef.current ? markersRef.current.state.mksEmpty : true} clearMarkers={markersRef.current ? markersRef.current.clearMarkers : null}/>
+                <SimulateClick isLocated={located} relocator={relo} isMarkersEmpty={markersRef.current ? markersRef.current.state.mksEmpty : true} clearMarkers={clr}/>
                 <LocationSearch nb={nearbyName} mks={markersRef} focus={focus}/>
             </Sheet>
         </Sheet>

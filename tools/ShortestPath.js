@@ -125,8 +125,6 @@ function __obvious_dijkstra(nodes, ways, loc, ch, count, aff, u, p) {
         const prev = curr;
         curr = fa[curr];
         if (vis.has(curr)) {
-            // sill(`Cycle at ${curr}`);
-            // sill(res);
             break;
         }
         vis.set(curr,true);
@@ -216,8 +214,6 @@ function __obvious_a_star(nodes, ways, loc, ch, count, aff, u, p, adaptive = fal
         const prev = curr;
         curr = fa[curr];
         if (vis.has(curr)) {
-            // sill(`Cycle at ${curr}`);
-            // sill(res);
             break;
         }
         vis.set(curr,true);
