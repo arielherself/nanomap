@@ -9,9 +9,12 @@
 
 ## Vercel
 
-An instance is deployed at https://nanomap.vercel.app<nothing>. You can also click the button below to deploy with your own account.
+We already deployed two instances for you to use:
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Farielherself%2Fnanomap&project-name=nanomap&repository-name=nanomap&demo-title=nanoMap&demo-description=A%20minimalized%20port%20for%20scheduling%20route%20on%20OpenStreetMap&demo-url=https%3A%2F%2Fnanomap.vercel.app)
+- Stable release: https://nanomap.vercel.app (suggested for most users)
+- Developer release: https://nanomap-dev.vercel.app
+
+You can also click this button to deploy with your own account: [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Farielherself%2Fnanomap&project-name=nanomap&repository-name=nanomap&demo-title=nanoMap&demo-description=A%20minimalized%20port%20for%20scheduling%20route%20on%20OpenStreetMap&demo-url=https%3A%2F%2Fnanomap.vercel.app)
 
 ## On your server
 
