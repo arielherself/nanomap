@@ -16,7 +16,9 @@ class Markers extends Component {
     // A location is a [lat,lon] pair.
     constructor(props) {
         super(props);
-        this.state = {markers: [], candMarkers: [], candEmpty: true, polylines: []};
+        this.state = {markers: [], candMarkers: [], mksEmpty: true, candEmpty: true, polylines: []};
+        this.clearMarkers = this.clearMarkers.bind(this);
+        this.clearCandMarkers = this.clearCandMarkers.bind(this);
     }
 
     render() {
@@ -38,6 +40,7 @@ class Markers extends Component {
         this.setState((prev) => ({
             markers: [...prev.markers, [lat, lng]],
             candMarkers: prev.candMarkers,
+            mksEmpty: false,
             candEmpty: prev.candEmpty,
             polylines: prev.polylines,
         }));
@@ -48,6 +51,7 @@ class Markers extends Component {
         this.setState((prev) => ({
             candMarkers: [...prev.candMarkers, [lat, lng]],
             markers: prev.markers,
+            mksEmpty: prev.mksEmpty,
             candEmpty: false,
             polylines: prev.polylines,
         }));
@@ -58,6 +62,7 @@ class Markers extends Component {
         this.setState((prev) => ({
             markers: [],
             candMarkers: prev.candMarkers,
+            mksEmpty: true,
             candEmpty: prev.candEmpty,
             polylines: [],
         }));
@@ -68,6 +73,7 @@ class Markers extends Component {
         this.setState((prev) => ({
             markers: prev.markers,
             candMarkers: [],
+            mksEmpty: prev.mksEmpty,
             candEmpty: true,
             polylines: prev.polylines,
         }));
@@ -93,6 +99,7 @@ class Markers extends Component {
         this.setState((prev) => ({
             markers: prev.markers,
             candMarkers: prev.candMarkers,
+            mksEmpty: prev.mksEmpty,
             candEmpty: prev.candEmpty,
             polylines: clear ? pl : [...pl, ...prev.polylines], // mind the ordering
         }));
@@ -105,7 +112,7 @@ function MapClickHandler({mks,focusUpdater,locator,locker}) {
         click: (e) => {
             map.locate();
             const {lat,lng}=e.latlng;
-            console.info(`Clicking on ${lat} ${lng}`);
+            sill(`Clicking on ${lat} ${lng}`);
             mks.current.addMarker(lat, lng);
             post('POST', 'click', mks.current.state.markers.slice(-2)).then((response) => {
                 // TODO: real functionality
@@ -252,7 +259,7 @@ export default function UMap() {
                 <ViewportChange/>
             </MapContainer>
             <Sheet sx={{position: 'absolute', top: '20px', right: '10vw', zIndex: 'modal'}}>
-                <SimulateClick isLocated={located} relocator={relo} isCandEmpty={markersRef.current ? markersRef.current.state.candEmpty : true}/>
+                <SimulateClick isLocated={located} relocator={relo} isMarkersEmpty={markersRef.current ? markersRef.current.state.mksEmpty : true} clearMarkers={markersRef.current ? markersRef.current.clearMarkers : null}/>
                 <LocationSearch nb={nearbyName} mks={markersRef} focus={focus}/>
             </Sheet>
         </Sheet>
