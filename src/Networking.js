@@ -1,16 +1,22 @@
-export function post(method,args) {
-    const data = new FormData();
-    data.append('method', method)
-    data.append('payload', args.join(','));
-    let res = '';
+import {sill} from "./tools/Debug";
+
+export function post(type,method,args) {
     let ft = async () => {
-        const response = await fetch('http://127.0.0.1:825/', {
-            method: 'POST',
-            body: data
-        });
-        const response_data = await response.text();
-        console.log(`Received: ${response_data}`);
+        let response;
+        if(type==='GET'){
+            const payload=args.join('@@');
+            response = await fetch(`/api/${method}${payload.length?"?query=":""}${payload}`, {
+                method: 'GET',
+            });
+        }else if(type==='POST'){
+            response = await fetch(`/api/${method}`, {
+                method: 'POST',
+                body: JSON.stringify(args),
+            });
+        }
+        const response_data = await response.json();
+        sill(`Request "${method}" finished:\n  ${response_data.log.replaceAll('\n','\n  ')}`);
         return response_data;
     };
     return ft();
-};
+}

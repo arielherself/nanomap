@@ -1,32 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="3c7078e7-6f30-4d92-9696-11496f9e6dff" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/nanomap/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/nanomap/.idea/jsLibraryMappings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/nanomap/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/nanomap/.idea/nanomap.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/nanomap/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/nanomap/nanomap/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/nanomap/nanomap/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/nanomap/nanomap/package-lock.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/nanomap/nanomap/package.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/nanomap/nanomap/public/favicon.ico" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/nanomap/nanomap/public/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/nanomap/nanomap/src/App.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/nanomap/nanomap/src/App.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/nanomap/nanomap/src/App.test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/nanomap/nanomap/src/Networking.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/nanomap/nanomap/src/SimulateClick.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/nanomap/nanomap/src/UMap.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/nanomap/nanomap/src/index.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/nanomap/nanomap/src/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/nanomap/nanomap/src/logo.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JavaScript File" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -34,29 +25,34 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 3
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 3
+}</component>
   <component name="ProjectId" id="2Yc9rUDmr9wvYpz7Xdq1eJVJoJy" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "dev",
-    "last_opened_file_path": "/home/user/Documents/fd_data-structures/pj/nanomap-frontend",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Node.js.test.js.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;dev&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/user/Documents/fd_data-structures/pj/frontend&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_interpreter_path&quot;: &quot;/home/user/.nvm/versions/node/v20.10.0/bin/node&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;npm.start.executor&quot;: &quot;Run&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;editor.preferences.fonts.default&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;/home/user/.local/share/JetBrains/Toolbox/apps/webstorm/plugins/javascript-impl/jsLanguageServicesImpl/external&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration name="start" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
       <package-json value="$PROJECT_DIR$/package.json" />
@@ -83,6 +79,16 @@
       <option name="presentableId" value="Default" />
       <updated>1700814200305</updated>
       <workItem from="1700814201341" duration="315000" />
+      <workItem from="1700814808669" duration="47000" />
+      <workItem from="1700822693197" duration="9493000" />
+      <workItem from="1701004587189" duration="3578000" />
+      <workItem from="1701042611758" duration="10222000" />
+      <workItem from="1701056208994" duration="5687000" />
+      <workItem from="1701847206194" duration="6179000" />
+      <workItem from="1702448962541" duration="5620000" />
+      <workItem from="1703419885970" duration="13073000" />
+      <workItem from="1703582457934" duration="210000" />
+      <workItem from="1703642799206" duration="22143000" />
     </task>
     <servers />
   </component>
