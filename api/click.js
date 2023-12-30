@@ -151,8 +151,7 @@ export default function handler(req, res) {
     sill(`Requesting ${request_uri}`);
     const fetch_debug_response = fetch(request_uri).then((response) => {
         return response.json();
-    });
-    fetch_debug_response.then((debug_response) => {
+    }).then((debug_response) => {
         // sill(debug_response);
         let ps = {};
         let ws = {};
@@ -163,7 +162,8 @@ export default function handler(req, res) {
                 ws[it.id] = it.nodes;
             }
         });
-        const path_found = shortest_path(ps, ws, pts[0], pts[pts.length - 1]);
+        sill(pts.length);
+        const path_found = pts.length < 2 ? [] : shortest_path(ps, ws, pts[0], pts[pts.length - 1]);
         res.status(200).json({
             log: `Method: click\nArgs: ${pts}\nStatus: requested "${request_uri}", got response ${JSON.stringify(debug_response.elements)}`,
             multipolyline: JSON.stringify(path_found),
