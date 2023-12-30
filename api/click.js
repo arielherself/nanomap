@@ -68,6 +68,7 @@ const shortest_path = noexcept((nodes, ways, start_point, end_point) => {
     const ch_dict = {};
     const ch_dict_bench = {};
     let f = 1;
+    // let time = 0;
     for (const t in ways) {
         // if (t === ways[aff[actual_start_node_id]]) sill('yes');
         const [l, n] = get_row(ways, t);
@@ -87,6 +88,7 @@ const shortest_path = noexcept((nodes, ways, start_point, end_point) => {
         //         ch_dict_bench[prev] = [[curr, distance]];
         //     }
         // }
+        // const start_time = performance.now();
         let prev = '';
         let distance = 0;
         for (let i = 0; i < n; ++i) {
@@ -111,7 +113,10 @@ const shortest_path = noexcept((nodes, ways, start_point, end_point) => {
                 distance = 0;
             }
         }
+        // const end_time = performance.now();
+        // time += end_time - start_time;
     }
+    // sill(`Preprocessing time: ${time}`);
     // const clean_nodes = {};
     // Object.keys(nodes).forEach((node_id) => {
     //     if (ch_dict[node_id]) clean_nodes[node_id] = nodes[node_id];
@@ -146,8 +151,7 @@ export default function handler(req, res) {
     sill(`Requesting ${request_uri}`);
     const fetch_debug_response = fetch(request_uri).then((response) => {
         return response.json();
-    });
-    fetch_debug_response.then((debug_response) => {
+    }).then((debug_response) => {
         // sill(debug_response);
         let ps = {};
         let ws = {};
@@ -158,7 +162,8 @@ export default function handler(req, res) {
                 ws[it.id] = it.nodes;
             }
         });
-        const path_found = shortest_path(ps, ws, pts[0], pts[pts.length - 1]);
+        sill(pts.length);
+        const path_found = pts.length < 2 ? [] : shortest_path(ps, ws, pts[0], pts[pts.length - 1]);
         res.status(200).json({
             log: `Method: click\nArgs: ${pts}\nStatus: requested "${request_uri}", got response ${JSON.stringify(debug_response.elements)}`,
             multipolyline: JSON.stringify(path_found),
